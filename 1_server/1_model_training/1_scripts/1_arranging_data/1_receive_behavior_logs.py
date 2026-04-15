@@ -6,6 +6,10 @@
 # INSTITUTION: Basque Center on Cognition, Brain and Language (BCBL), Spain
 # LICENCE: GNU General Public License v3.0
 ############################################################################
+
+
+# things to edit: hardcoded IP needs to be updated in 3 places
+
 """
 This script is designed to recieve the behavior log files from the client side.
 
