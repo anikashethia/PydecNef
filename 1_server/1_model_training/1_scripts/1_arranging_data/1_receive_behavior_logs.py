@@ -27,12 +27,14 @@ def timeout(signum, frame):
      #Raises a TimeoutError to break out of the loop when the server operation times out.
     raise TimeoutError("The server operation timed out.")
 
+# walks 3 directories up from this script's location to find the 1_model_training/ root
 decoder_training_folder_path = os.path.abspath(os.path.join(
     os.path.abspath(__file__), os.pardir, os.pardir, os.pardir
 ))
 
 i = 1
 
+# fresh connection object and server is created on every loop iteration
 while True:
     try:
         # Initialize and start the server connection
@@ -43,6 +45,8 @@ while True:
         signal.signal(signal.SIGALRM, timeout)
         signal.alarm(5)  # Wait for 5 seconds before raising TimeoutError
 
+         #note: 2 separate receives - first gets the column names (list of strings), then waits 2 seconds
+         # then gets row data (list of lists)
         # Listen to the server for incoming data
         raw_columns = server.listen()
 
@@ -51,10 +55,10 @@ while True:
         # Retrieve and process the raw data from the server
         raw_data = server.listen()
 
-        # Create DataFrame from raw data using columns from previous listen call
+        # Create DataFrame from raw data using columns from previous listen call - reconstruct behavioral dataframe from the 2 pieces
         data = pd.DataFrame(raw_data, columns=raw_columns)
 
-        # Ensure the output directory exists
+        # Ensure the output directory exists - creates output folder if needed
         output_folder = os.path.join(decoder_training_folder_path, "2.data", "raw", "behav")
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
