@@ -21,13 +21,16 @@ init(autoreset=True)
 def timeout(signum, frame):
     raise TimeoutError
 
+#module-level constants
+# define where the server lives on local network
 #IP = socket.gethostname() # To use with localhost address
 IP = '192.168.242.119' # Local server computer IP
 PORT = 12345 # Server PORT
 FORMAT = 'utf-8' # Data format for bytes encoding and decoding
 N_BYTES = 2000 # Maximun number of bytes to expect from connection
-TIMEOUT = 500 # Maximum number of seconds of innactivity
+TIMEOUT = 500 # Maximum number of seconds of innactivity (if nothing is sent or received for 500 seconds, connection closes automatically)
 
+# assigns all contants to instance variables and ses global socket timeout - nothnig actually connects yet
 class Connection:
     """ A class to establish connection between two terminals through sockets"""
     def __init__(self):
@@ -39,6 +42,7 @@ class Connection:
         socket.setdefaulttimeout(TIMEOUT) # Set a timeout (when client/server do not send/receive any 
                                       # data for this timeframe, then close connection)
 
+    # creates a TCP socket
     def start_server(self):
 
         """ A class method to initialize server connection side """
