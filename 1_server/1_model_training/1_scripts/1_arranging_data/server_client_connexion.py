@@ -73,6 +73,7 @@ class Connection:
                 break
         print(Fore.GREEN + f'[CONNECTED] Connection with {self.client_address} has been established.')
 
+    # basically mirrors the server side: creates a socket and connects to server's IP/PORT
 
     def start_client(self):
 
@@ -114,6 +115,10 @@ class Connection:
         message = pickle.loads(b"".join(data)) # Unpickle the message
         print(Fore.GREEN + f'[RECEIVED] Message: "{message}" received.')
         return message
+
+    # because large data might arrive in multiple chunks, it loops collecting packets into a list --> SIGALRM timer
+    # fires after 1 second of no new data, which breaks the loop - how it knows the full message has arrived
+    # all chunks are joined and unpickled back into a Python object
 
     def send(self, message):
 
