@@ -30,7 +30,7 @@ import os
 from datetime import datetime
 import shutil
 
-# Define the main folder path where MRI scanner dumps scans
+# Define the main folder path (FIRMM) where MRI scanner dumps scans
 recorded_data_main_folder = "/firmm/"
 
 # Toggle for test mode to alter data paths.
